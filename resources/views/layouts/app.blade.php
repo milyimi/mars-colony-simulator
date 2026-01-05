@@ -59,9 +59,9 @@
 
         body.high-contrast .btn-danger {
             background: #ff0000;
-            color: #000000;
+            color: #ffffff;
             border-color: #ff0000;
-            text-shadow: none;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
 
         * {
