@@ -1,4 +1,9 @@
 <div>
+    @if(!$this->colony)
+        <div role="alert" class="status-error">
+            読み込み中...
+        </div>
+    @else
     {{-- メッセージ表示 --}}
     @if($message)
         <div role="{{ $messageType === 'error' ? 'alert' : 'status' }}" 
@@ -14,17 +19,17 @@
         <div style="background: var(--bg-secondary); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
             <dl style="display: grid; grid-template-columns: auto 1fr; gap: 10px 20px;">
                 <dt><strong>コロニー名:</strong></dt>
-                <dd>{{ $colony->name }}</dd>
+                <dd>{{ $this->colony->name }}</dd>
                 
                 <dt><strong>ターン数:</strong></dt>
-                <dd>{{ $colony->turn }}</dd>
+                <dd>{{ $this->colony->turn }}</dd>
                 
                 <dt><strong>人口:</strong></dt>
-                <dd>{{ $colony->population }}人</dd>
+                <dd>{{ $this->colony->population }}人</dd>
                 
                 <dt><strong>状態:</strong></dt>
                 <dd>
-                    @if($colony->is_active)
+                    @if($this->colony->is_active)
                         <span style="color: var(--success);">稼働中</span>
                     @else
                         <span style="color: var(--danger);">終了</span>
@@ -44,24 +49,24 @@
                      aria-label="{{ $label }}の状態">
                     <h3 style="font-size: 1.2rem; margin-bottom: 10px;">
                         {{ $label }}
-                        <span class="sr-only">: {{ $colony->$key }}. 状態: {{ $colony->getResourceStatus($key) }}</span>
+                        <span class="sr-only">: {{ $this->colony->$key }}. 状態: {{ $this->colony->getResourceStatus($key) }}</span>
                     </h3>
                     
                     <div style="font-size: 2rem; font-weight: bold; margin: 10px 0;"
                          aria-hidden="true">
-                        {{ $colony->$key }}
+                        {{ $this->colony->$key }}
                     </div>
                     
                     <div style="margin: 10px 0;">
                         <div style="background: var(--bg-primary); height: 30px; border-radius: 4px; overflow: hidden; border: 3px solid var(--border-color); position: relative;">
                             <div class="progress-bar"
                                  style="height: 100%; 
-                                        width: {{ min($colony->$key / 2, 100) }}%;
+                                        width: {{ min($this->colony->$key / 2, 100) }}%;
                                         transition: width 0.3s;
-                                        border-right: {{ min($colony->$key / 2, 100) < 100 ? '3px solid var(--border-color)' : 'none' }};
-                                        background-color: {{ $colony->$key > 50 ? 'var(--success)' : ($colony->$key > 20 ? 'var(--warning)' : 'var(--danger)') }};"
+                                        border-right: {{ min($this->colony->$key / 2, 100) < 100 ? '3px solid var(--border-color)' : 'none' }};
+                                        background-color: {{ $this->colony->$key > 50 ? 'var(--success)' : ($this->colony->$key > 20 ? 'var(--warning)' : 'var(--danger)') }};"
                                  role="progressbar"
-                                 aria-valuenow="{{ $colony->$key }}"
+                                 aria-valuenow="{{ $this->colony->$key }}"
                                  aria-valuemin="0"
                                  aria-valuemax="200"
                                  aria-label="{{ $label }}の量"></div>
@@ -70,14 +75,14 @@
                     
                     <div style="margin-top: 10px;">
                         <strong>状態:</strong> 
-                        <span style="color: {{ $colony->$key > 50 ? 'var(--success)' : ($colony->$key > 20 ? 'var(--warning)' : 'var(--danger)') }}">
-                            {{ $colony->getResourceStatus($key) }}
+                        <span style="color: {{ $this->colony->$key > 50 ? 'var(--success)' : ($this->colony->$key > 20 ? 'var(--warning)' : 'var(--danger)') }}">
+                            {{ $this->colony->getResourceStatus($key) }}
                         </span>
                     </div>
                     
                     <div style="margin-top: 5px; color: var(--text-secondary);">
                         <span class="sr-only">毎ターンの生産量: </span>
-                        生産: +{{ $colony->{$key . '_facility'} * (match($key) {
+                        生産: +{{ $this->colony->{$key . '_facility'} * (match($key) {
                             'oxygen' => 10,
                             'water' => 10,
                             'power' => 15,
@@ -86,7 +91,7 @@
                     </div>
                     <div style="color: var(--text-secondary);">
                         <span class="sr-only">毎ターンの消費量: </span>
-                        消費: -{{ $colony->population * (match($key) {
+                        消費: -{{ $this->colony->population * (match($key) {
                             'oxygen' => 5,
                             'water' => 3,
                             'power' => 4,
@@ -110,10 +115,10 @@
                 <div style="background: var(--bg-secondary); padding: 15px; border-radius: 8px;">
                     <h3 style="font-size: 1.1rem; margin-bottom: 10px;">{{ $label }}</h3>
                     <div style="margin-bottom: 10px;">
-                        <strong>現在数:</strong> {{ $colony->{$key . '_facility'} }}施設
+                        <strong>現在数:</strong> {{ $this->colony->{$key . '_facility'} }}施設
                     </div>
                     <button wire:click="buildFacility('{{ $key }}')"
-                            @if(!$colony->is_active) disabled @endif
+                            @if(!$this->colony->is_active) disabled @endif
                             aria-label="{{ $label }}を建設する。コスト: 各リソース20">
                         建設する
                     </button>
@@ -127,7 +132,7 @@
         <h2 id="actions">アクション</h2>
         <div class="flex gap-4" style="flex-wrap: wrap;">
             <button wire:click="nextTurn"
-                    @if(!$colony->is_active) disabled @endif
+                    @if(!$this->colony->is_active) disabled @endif
                     class="btn-success"
                     aria-label="次のターンに進む。リソースが生産・消費されます。">
                 <span aria-hidden="true">▶️</span> 次のターンへ
@@ -164,4 +169,5 @@
             <dd>ボタンを押す</dd>
         </dl>
     </details>
+@endif
 </div>

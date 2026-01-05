@@ -8,25 +8,49 @@ use Livewire\Attributes\On;
 
 class ColonyGame extends Component
 {
-    public Colony $colony;
+    public ?int $colonyId = null;
     public string $message = '';
     public string $messageType = '';
 
+    public function getColonyProperty()
+    {
+        if (!$this->colonyId) {
+            return null;
+        }
+        return Colony::find($this->colonyId);
+    }
+
     public function mount()
     {
-        // 既存のアクティブなコロニーを取得、なければ新規作成
-        $this->colony = Colony::where('is_active', true)->first() ?? Colony::create([
-            'name' => '第1コロニー',
-            'oxygen' => 100,
-            'water' => 100,
-            'power' => 100,
-            'food' => 100,
-            'population' => 5,
-            'oxygen_facility' => 1,
-            'water_facility' => 1,
-            'power_facility' => 1,
-            'food_facility' => 1,
-        ]);
+        // セッションからコロニーIDを取得
+        $colonyId = session('colony_id');
+        
+        // セッションにIDがあれば、そのコロニーを取得
+        $colony = null;
+        if ($colonyId) {
+            $colony = Colony::find($colonyId);
+        }
+        
+        // コロニーが存在しないか、既に終了している場合は新規作成
+        if (!$colony || !$colony->is_active) {
+            $colony = Colony::create([
+                'name' => '第1コロニー',
+                'oxygen' => 100,
+                'water' => 100,
+                'power' => 100,
+                'food' => 100,
+                'population' => 5,
+                'oxygen_facility' => 1,
+                'water_facility' => 1,
+                'power_facility' => 1,
+                'food_facility' => 1,
+            ]);
+            
+            // セッションに保存
+            session(['colony_id' => $colony->id]);
+        }
+        
+        $this->colonyId = $colony->id;
     }
 
     /**
@@ -34,7 +58,7 @@ class ColonyGame extends Component
      */
     public function nextTurn()
     {
-        if (!$this->colony->is_active) {
+        if (!$this->colony || !$this->colony->is_active) {
             $this->message = 'ゲームは既に終了しています。';
             $this->messageType = 'error';
             $this->dispatch('announce', message: $this->message);
@@ -42,7 +66,6 @@ class ColonyGame extends Component
         }
 
         $this->colony->nextTurn();
-        $this->colony->refresh();
 
         if (!$this->colony->is_active) {
             $this->message = 'ゲームオーバー！コロニーは' . $this->colony->turn . 'ターン生き延びました。';
@@ -60,7 +83,7 @@ class ColonyGame extends Component
      */
     public function buildFacility(string $type)
     {
-        if (!$this->colony->is_active) {
+        if (!$this->colony || !$this->colony->is_active) {
             $this->message = 'ゲームは既に終了しています。';
             $this->messageType = 'error';
             $this->dispatch('announce', message: $this->message);
@@ -75,7 +98,6 @@ class ColonyGame extends Component
         ];
 
         if ($this->colony->buildFacility($type)) {
-            $this->colony->refresh();
             $this->message = $facilityNames[$type] . 'を建設しました！';
             $this->messageType = 'success';
         } else {
@@ -91,8 +113,16 @@ class ColonyGame extends Component
      */
     public function resetGame()
     {
-        $this->colony->delete();
+        if ($this->colony) {
+            $this->colony->delete();
+        }
+        
+        // セッションから削除
+        session()->forget('colony_id');
+        
+        // 新しいコロニーを作成
         $this->mount();
+        
         $this->message = '新しいゲームを開始しました！';
         $this->messageType = 'success';
         $this->dispatch('announce', message: $this->message);
