@@ -208,14 +208,24 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10L10 0M-1 1L1 -1M9 11L11 9' stroke='rgba(0,0,0,0.25)' stroke-width='2'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6L6 0M-1 1L1 -1M5 7L7 5' stroke='rgba(255,255,255,0.9)' stroke-width='1'/%3E%3C/svg%3E");
             background-repeat: repeat;
             pointer-events: none;
-            z-index: 1;
+            z-index: 10;
+            mix-blend-mode: normal;
         }
 
         body.high-contrast .progress-bar::before {
-            background-image: url("data:image/svg+xml,%3Csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 8L8 0M-1 1L1 -1M7 9L9 7' stroke='rgba(255,255,255,0.5)' stroke-width='2'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6L6 0M-1 1L1 -1M5 7L7 5' stroke='rgba(255,255,255,0.9)' stroke-width='1'/%3E%3C/svg%3E");
+            mix-blend-mode: normal;
+        }
+
+        /* Windows OSのハイコントラストモード対応 */
+        @media (prefers-contrast: high) {
+            body:not(.high-contrast) .progress-bar::before {
+                background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6L6 0M-1 1L1 -1M5 7L7 5' stroke='rgba(255,255,255,0.9)' stroke-width='1'/%3E%3C/svg%3E");
+                mix-blend-mode: normal;
+            }
         }
     </style>
 </head>
