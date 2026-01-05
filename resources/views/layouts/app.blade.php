@@ -33,6 +33,37 @@
             --danger: #ff0000;
         }
 
+        /* アクションボタン用の色 */
+        .btn-success {
+            background: #059669;
+            color: white;
+            border-color: #059669;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+            border-color: #dc2626;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        body.high-contrast .btn-success {
+            background: #00ff00;
+            color: #000000;
+            border-color: #00ff00;
+            text-shadow: none;
+        }
+
+        body.high-contrast .btn-danger {
+            background: #ff0000;
+            color: #000000;
+            border-color: #ff0000;
+            text-shadow: none;
+        }
+
         * {
             margin: 0;
             padding: 0;

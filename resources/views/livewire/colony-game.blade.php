@@ -128,13 +128,13 @@
         <div class="flex gap-4" style="flex-wrap: wrap;">
             <button wire:click="nextTurn"
                     @if(!$colony->is_active) disabled @endif
-                    style="background: var(--success); color: white; border-color: var(--success);"
+                    class="btn-success"
                     aria-label="次のターンに進む。リソースが生産・消費されます。">
                 <span aria-hidden="true">▶️</span> 次のターンへ
             </button>
             
             <button wire:click="resetGame"
-                    style="background: var(--danger); color: white; border-color: var(--danger);"
+                    class="btn-danger"
                     aria-label="ゲームをリセットして最初からやり直す"
                     onclick="return confirm('本当にゲームをリセットしますか？')">
                 <span aria-hidden="true">🔄</span> リセット
