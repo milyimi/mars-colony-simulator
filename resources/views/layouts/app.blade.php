@@ -164,6 +164,28 @@
             color: black;
             border-color: var(--warning);
         }
+
+        /* プログレスバーのパターン */
+        .progress-bar {
+            position: relative;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10L10 0M-1 1L1 -1M9 11L11 9' stroke='rgba(0,0,0,0.25)' stroke-width='2'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        body.high-contrast .progress-bar::before {
+            background-image: url("data:image/svg+xml,%3Csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 8L8 0M-1 1L1 -1M7 9L9 7' stroke='rgba(255,255,255,0.5)' stroke-width='2'/%3E%3C/svg%3E");
+        }
     </style>
 </head>
 <body>

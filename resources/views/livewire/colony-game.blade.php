@@ -53,11 +53,13 @@
                     </div>
                     
                     <div style="margin: 10px 0;">
-                        <div style="background: var(--bg-primary); height: 30px; border-radius: 4px; overflow: hidden; border: 2px solid var(--border-color);">
-                            <div style="background: {{ $colony->$key > 50 ? 'var(--success)' : ($colony->$key > 20 ? 'var(--warning)' : 'var(--danger)') }}; 
-                                        height: 100%; 
+                        <div style="background: var(--bg-primary); height: 30px; border-radius: 4px; overflow: hidden; border: 3px solid var(--border-color); position: relative;">
+                            <div class="progress-bar"
+                                 style="height: 100%; 
                                         width: {{ min($colony->$key / 2, 100) }}%;
-                                        transition: width 0.3s;"
+                                        transition: width 0.3s;
+                                        border-right: {{ min($colony->$key / 2, 100) < 100 ? '3px solid var(--border-color)' : 'none' }};
+                                        background-color: {{ $colony->$key > 50 ? 'var(--success)' : ($colony->$key > 20 ? 'var(--warning)' : 'var(--danger)') }};"
                                  role="progressbar"
                                  aria-valuenow="{{ $colony->$key }}"
                                  aria-valuemin="0"
