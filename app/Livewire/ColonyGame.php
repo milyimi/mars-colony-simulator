@@ -121,7 +121,7 @@ class ColonyGame extends Component
         session()->forget('colony_id');
         
         // ページをリロードして新しいゲームを開始
-        return redirect()->route('game');
+        return redirect()->route('home');
     }
 
     public function render()

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>火星移住計画シミュレータ</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
     <style>
         /* 基本スタイル */
         :root {
@@ -296,5 +295,6 @@
             }
         });
     </script>
+    @livewireScripts
 </body>
 </html>
