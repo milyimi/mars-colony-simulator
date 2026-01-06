@@ -120,12 +120,8 @@ class ColonyGame extends Component
         // セッションから削除
         session()->forget('colony_id');
         
-        // 新しいコロニーを作成
-        $this->mount();
-        
-        $this->message = '新しいゲームを開始しました！';
-        $this->messageType = 'success';
-        $this->dispatch('announce', message: $this->message);
+        // ページをリロードして新しいゲームを開始
+        return redirect()->route('game');
     }
 
     public function render()
