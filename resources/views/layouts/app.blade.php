@@ -195,6 +195,28 @@
             border-color: var(--warning);
         }
 
+        /* ハイコントラストモードでのステータスメッセージ */
+        body.high-contrast .status-success {
+            background: #003300;
+            color: #00ff00;
+            border-color: #00ff00;
+            border-width: 3px;
+        }
+
+        body.high-contrast .status-error {
+            background: #330000;
+            color: #ff0000;
+            border-color: #ff0000;
+            border-width: 3px;
+        }
+
+        body.high-contrast .status-warning {
+            background: #333300;
+            color: #ffff00;
+            border-color: #ffff00;
+            border-width: 3px;
+        }
+
         /* プログレスバーのパターン */
         .progress-bar {
             position: relative;
