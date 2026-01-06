@@ -32,8 +32,29 @@
 
 ## セットアップ
 
+### すぐに起動する場合（ビルド済みアセット使用）
+
 ```bash
 # 依存関係をインストール
+composer install --no-dev
+
+# 環境設定
+cp .env.example .env
+php artisan key:generate
+
+# データベースマイグレーション
+php artisan migrate
+
+# 開発サーバー起動
+php artisan serve
+```
+
+ブラウザで `http://localhost:8000` にアクセス
+
+### 開発・再ビルドする場合
+
+```bash
+# 依存関係をインストール（開発パッケージ含む）
 composer install
 npm install
 
@@ -44,11 +65,8 @@ php artisan key:generate
 # データベースマイグレーション
 php artisan migrate
 
-# フロントエンドのビルド
-npm run dev
-
-# 開発サーバー起動
-php artisan serve
+# 開発サーバーとViteを起動（2つのターミナルで実行）
+composer run dev  # または: npm run dev と php artisan serve を別々に実行
 ```
 
 ## 使い方
