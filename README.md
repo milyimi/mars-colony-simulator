@@ -30,6 +30,11 @@
 - **SQLite** - データベース
 - **Vite** - フロントエンドビルドツール
 
+### データベース選択の目安
+- デフォルトはSQLiteで手軽に開始できます（`.env.example`もSQLite想定）。
+- 同時アクセスが増える想定なら **MySQL または MariaDB を推奨**。行ロック・接続プールに対応し、書き込み競合に強く運用機能も充実しています。
+- MySQL利用例（`.env`）：`DB_CONNECTION=mysql`、`DB_HOST=mysql`、`DB_DATABASE=mars-colony`、`DB_USERNAME=root`、`DB_PASSWORD=secret`、`DB_PORT=3306`。
+
 ## セットアップ
 
 ### すぐに起動する場合（ビルド済みアセット使用）
