@@ -325,8 +325,8 @@
                 </div>
             </section>
 
-            <section aria-labelledby="winning-strategy">
-                <h2 id="winning-strategy">勝利の戦略</h2>
+            <section aria-labelledby="play-strategy">
+                <h2 id="play-strategy">プレイ戦略</h2>
                 <ol>
                     <li><strong>最初のターンでリソースの減少を確認</strong>する</li>
                     <li><strong>最も減少が激しいリソースの施設を優先的に建設</strong>する</li>
