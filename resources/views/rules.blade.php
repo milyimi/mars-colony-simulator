@@ -208,22 +208,22 @@
                         <tr>
                             <th scope="row">酸素</th>
                             <td>入植者が呼吸するために必要</td>
-                            <td>100</td>
+                            <td>200</td>
                         </tr>
                         <tr>
                             <th scope="row">水</th>
                             <td>飲料水や農業に使用</td>
-                            <td>100</td>
+                            <td>200</td>
                         </tr>
                         <tr>
                             <th scope="row">電力</th>
                             <td>施設の稼働に必要</td>
-                            <td>100</td>
+                            <td>200</td>
                         </tr>
                         <tr>
                             <th scope="row">食料</th>
                             <td>入植者の生存に必要</td>
-                            <td>100</td>
+                            <td>200</td>
                         </tr>
                     </tbody>
                 </table>
@@ -233,6 +233,7 @@
                 <ul>
                     <li><strong>リソースが生産されます</strong>（施設の数に応じて）</li>
                     <li><strong>リソースが消費されます</strong>（人口に応じて）</li>
+                    <li><strong>人口が増加することがあります</strong>（3ターンごとに1人増加）</li>
                     <li>ターン数が1増加します</li>
                 </ul>
 

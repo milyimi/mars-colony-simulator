@@ -65,6 +65,12 @@ class Colony extends Model
         }
 
         $this->turn++;
+
+        // 人口増加（3ターンごとに1人加わる）
+        if ($this->turn % 3 === 0) {
+            $this->population++;
+        }
+
         $this->save();
     }
 

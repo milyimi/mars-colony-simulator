@@ -35,10 +35,10 @@ class ColonyGame extends Component
         if (!$colony || !$colony->is_active) {
             $colony = Colony::create([
                 'name' => '第1コロニー',
-                'oxygen' => 100,
-                'water' => 100,
-                'power' => 100,
-                'food' => 100,
+                'oxygen' => 200,
+                'water' => 200,
+                'power' => 200,
+                'food' => 200,
                 'population' => 5,
                 'oxygen_facility' => 1,
                 'water_facility' => 1,
