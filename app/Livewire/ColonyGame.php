@@ -98,6 +98,8 @@ class ColonyGame extends Component
         ];
 
         if ($this->colony->buildFacility($type)) {
+            // 最新状態を反映
+            $this->colony->refresh();
             $this->message = $facilityNames[$type] . 'を建設しました！';
             $this->messageType = 'success';
         } else {

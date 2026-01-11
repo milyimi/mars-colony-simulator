@@ -99,11 +99,10 @@ class Colony extends Model
         $this->power -= $cost['power'];
         $this->food -= $cost['food'];
 
-        // 施設追加
+        // 施設追加（Eloquent属性を直接加算）
         $facilityColumn = $type . '_facility';
-        if (property_exists($this, $facilityColumn)) {
-            $this->$facilityColumn++;
-        }
+        $current = (int) ($this->$facilityColumn ?? 0);
+        $this->$facilityColumn = $current + 1;
 
         $this->save();
         return true;
@@ -125,5 +124,22 @@ class Colony extends Model
         } else {
             return '十分';
         }
+    }
+
+    /**
+     * 勝利条件を判定
+     */
+    public function hasWon(): bool
+    {
+        if (!$this->is_active) {
+            return false;
+        }
+
+        $resourcesPositive = $this->oxygen > 0
+            && $this->water > 0
+            && $this->power > 0
+            && $this->food > 0;
+
+        return $this->turn >= 15 && $resourcesPositive;
     }
 }
