@@ -399,9 +399,37 @@
             localStorage.setItem('highContrast', isHighContrast);
         }
 
-        if (localStorage.getItem('highContrast') === 'true') {
-            document.body.classList.add('high-contrast');
+        // ページ読み込み時にハイコントラスト設定を初期化
+        function initializeColorScheme() {
+            const savedContrast = localStorage.getItem('highContrast');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // ローカルストレージに保存がなければOS設定に従う
+            if (savedContrast === null) {
+                if (prefersDark) {
+                    document.body.classList.add('high-contrast');
+                }
+            } else if (savedContrast === 'true') {
+                // 保存された設定があればそれを使う
+                document.body.classList.add('high-contrast');
+            }
         }
+
+        // OS設定の変更をリアルタイムで検出
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            const savedContrast = localStorage.getItem('highContrast');
+            // ユーザーが手動設定していなければOS設定に追従
+            if (savedContrast === null) {
+                if (e.matches) {
+                    document.body.classList.add('high-contrast');
+                } else {
+                    document.body.classList.remove('high-contrast');
+                }
+            }
+        });
+
+        // ページ読み込み時に初期化
+        initializeColorScheme();
     </script>
 </body>
 </html>
